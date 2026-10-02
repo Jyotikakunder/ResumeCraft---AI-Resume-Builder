@@ -1,0 +1,1215 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="ResumeCraft - Create professional resumes with modern templates, live preview and AI-assisted writing.">
+        <title>ResumeCraft | Build a Resume That Gets Noticed</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background: #f5f4ef;
+                color: #17202a;
+                line-height: 1.6;
+            }
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+            button, input, textarea {
+                font-family: inherit;
+            }
+            .navbar {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                height: 72px;
+                background: rgba(245, 244, 239, 0.95);
+                border-bottom: 1px solid #deddd5;
+                backdrop-filter: blur(12px);
+            }
+            .nav-inner {
+                max-width: 1240px;
+                height: 100%;
+                margin: auto;
+                padding: 0 25px;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                font-size: 21px;
+                font-weight: 800;
+                letter-spacing: -0.5px;
+            }
+            .brand-mark {
+                width: 35px;
+                height: 35px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                background: #173f35;
+                color: white;
+                border-radius: 7px;
+
+                font-size: 17px;
+                font-weight: 800;
+            }
+            .brand-name {
+                color: #173f35;
+            }
+            .nav-links {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+            }
+            .nav-links a {
+                font-size: 13px;
+                font-weight: 600;
+                color: #5f6865;
+                transition: 0.2s;
+            }
+            .nav-links a:hover {
+                color: #173f35;
+            }
+            .nav-actions {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .login-link {
+                font-size: 13px;
+                font-weight: 700;
+                color: #39433f;
+            }
+            .nav-cta {
+                background: #173f35;
+                color: white;
+
+                padding: 10px 17px;
+                border-radius: 5px;
+
+                font-size: 12px;
+                font-weight: 700;
+
+                transition: 0.2s;
+            }
+            .nav-cta:hover {
+                background: #0f3028;
+            }
+            .menu-button {
+                display: none;
+                border: none;
+                background: transparent;
+                font-size: 23px;
+                cursor: pointer;
+            }
+            .hero {
+                position: relative;
+                overflow: hidden;
+                padding: 90px 25px 100px;
+                border-bottom: 1px solid #deddd5;
+            }
+            .hero-inner {
+                max-width: 1240px;
+                margin: auto;
+
+                display: grid;
+                grid-template-columns: 0.95fr 1.05fr;
+                align-items: center;
+                gap: 80px;
+            }
+            .hero-tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 7px 11px;
+                background: #e8efe9;
+                color: #205443;
+                font-size: 10px;
+                font-weight: 800;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                margin-bottom: 23px;
+            }
+            .tag-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #3d8b67;
+            }
+            .hero h1 {
+                max-width: 650px;
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: clamp(45px, 5.5vw, 76px);
+                line-height: 0.98;
+                letter-spacing: -3px;
+                color: #17202a;
+                margin-bottom: 26px;
+            }
+            .hero h1 em {
+                color: #28654f;
+                font-style: italic;
+            }
+            .hero-description {
+                max-width: 570px;
+                color: #65706c;
+                font-size: 16px;
+                line-height: 1.8;
+                margin-bottom: 30px;
+            }
+            .hero-actions {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .primary-button {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                background: #173f35;
+                color: white;
+                padding: 14px 20px;
+                border-radius: 5px;
+                font-size: 13px;
+                font-weight: 750;
+                transition: 0.2s;
+            }
+            .primary-button:hover {
+                background: #0f3028;
+                transform: translateY(-2px);
+            }
+            .outline-button {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                border: 1px solid #c8c9c2;
+                color: #38423e;
+                padding: 13px 20px;
+                border-radius: 5px;
+                font-size: 13px;
+                font-weight: 700;
+                transition: 0.2s;
+            }
+            .outline-button:hover {
+                border-color: #173f35;
+                color: #173f35;
+            }
+            .hero-note {
+                margin-top: 23px;
+                font-size: 11px;
+                color: #89908d;
+            }
+            .hero-preview {
+                position: relative;
+                min-height: 560px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .preview-background {
+                position: absolute;
+                width: 430px;
+                height: 500px;
+                background: #e6e4db;
+                transform: rotate(5deg);
+            }
+            .resume-sheet {
+                position: relative;
+                z-index: 2;
+                width: 390px;
+                min-height: 510px;
+                background: white;
+                box-shadow: 0 25px 70px rgba(24, 31, 29, 0.18);
+                padding: 37px;
+                transform: rotate(-2deg);
+            }
+            .resume-top {
+                display: grid;
+                grid-template-columns: 1fr 75px;
+                gap: 15px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid #173f35;
+            }
+            .resume-name {
+                width: 190px;
+                height: 16px;
+                background: #173f35;
+                margin-bottom: 9px;
+            }
+            .resume-role {
+                width: 120px;
+                height: 7px;
+                background: #a7b1ad;
+            }
+            .resume-photo {
+                width: 67px;
+                height: 67px;
+                background: #dce4de;
+                border-radius: 2px;
+            }
+            .resume-section {
+                margin-top: 21px;
+            }
+            .resume-section-title {
+                width: 75px;
+                height: 7px;
+                background: #28654f;
+                margin-bottom: 11px;
+            }
+            .resume-line {
+                height: 5px;
+                background: #e2e4e1;
+                margin-bottom: 6px;
+            }
+            .resume-line.large {
+                width: 95%;
+            }
+            .resume-line.medium {
+                width: 78%;
+            }
+            .resume-line.short {
+                width: 60%;
+            }
+            .resume-skills {
+                display: flex;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+            .skill {
+                width: 50px;
+                height: 15px;
+                background: #e8efe9;
+            }
+            .floating-label {
+                position: absolute;
+                z-index: 4;
+                right: 8px;
+                bottom: 65px;
+                background: white;
+                padding: 13px 15px;
+                box-shadow: 0 12px 30px rgba(24, 31, 29, 0.12);
+                border-left: 3px solid #3d8b67;
+                font-size: 11px;
+                font-weight: 700;
+                color: #39433f;
+            }
+            .floating-label span {
+                display: block;
+                color: #7b8581;
+                font-size: 9px;
+                margin-top: 2px;
+                font-weight: 500;
+            }
+            .trust-bar {
+                border-bottom: 1px solid #deddd5;
+                background: #f0efe9;
+            }
+            .trust-inner {
+                max-width: 1240px;
+                margin: auto;
+                padding: 20px 25px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            .trust-text {
+                color: #7a827f;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .trust-items {
+                display: flex;
+                gap: 35px;
+                color: #68716d;
+                font-size: 12px;
+                font-weight: 700;
+            }
+            .section {
+                padding: 100px 25px;
+            }
+            .section-inner {
+                max-width: 1240px;
+                margin: auto;
+            }
+            .section-heading {
+                max-width: 680px;
+                margin-bottom: 55px;
+            }
+            .section-label {
+                color: #28654f;
+                font-size: 10px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                margin-bottom: 12px;
+            }
+            .section-heading h2 {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 42px;
+                line-height: 1.12;
+                letter-spacing: -1.5px;
+                color: #17202a;
+                margin-bottom: 14px;
+            }
+            .section-heading p {
+                color: #707975;
+                font-size: 14px;
+                line-height: 1.8;
+            }
+            .features-section {
+                background: #ffffff;
+            }
+            .feature-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1px;
+                background: #dcded8;
+                border: 1px solid #dcded8;
+            }
+            .feature {
+                background: #ffffff;
+                padding: 32px;
+                min-height: 220px;
+                transition: 0.2s;
+            }
+            .feature:hover {
+                background: #f8faf7;
+            }
+            .feature-number {
+                color: #9aa19e;
+                font-size: 11px;
+                font-weight: 800;
+                margin-bottom: 30px;
+            }
+            .feature h3 {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 22px;
+                margin-bottom: 10px;
+            }
+            .feature p {
+                color: #707975;
+                font-size: 13px;
+                line-height: 1.7;
+            }
+            .templates-section {
+                background: #f5f4ef;
+            }
+            .template-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+            }
+            .template-card {
+                background: white;
+                border: 1px solid #deddd5;
+                transition: 0.25s;
+            }
+            .template-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 45px rgba(23, 32, 42, 0.09);
+            }
+            .template-preview {
+                height: 390px;
+                background: #ebeae4;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 30px;
+            }
+            .template-paper {
+                width: 215px;
+                height: 315px;
+                background: white;
+                box-shadow: 0 12px 25px rgba(23, 32, 42, 0.12);
+                padding: 22px;
+            }
+            .template-paper.modern {
+                border-top: 8px solid #173f35;
+            }
+            .template-paper.clean {
+                border-left: 8px solid #315b73;
+            }
+            .template-paper.executive {
+                border-top: 5px solid #8a6842;
+            }
+            .template-header-line {
+                width: 100px;
+                height: 9px;
+                background: #26332f;
+                margin-bottom: 7px;
+            }
+            .template-subtitle {
+                width: 65px;
+                height: 5px;
+                background: #a5adaa;
+                margin-bottom: 23px;
+            }
+            .template-heading {
+                width: 55px;
+                height: 6px;
+                background: #28654f;
+                margin: 15px 0 8px;
+            }
+            .template-line {
+                width: 100%;
+                height: 4px;
+                background: #e1e4e1;
+                margin-bottom: 5px;
+            }
+            .template-line.short {
+                width: 70%;
+            }
+            .template-info {
+                padding: 20px;
+                border-top: 1px solid #e3e2dc;
+            }
+            .template-info h3 {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 19px;
+                margin-bottom: 5px;
+            }
+            .template-info p {
+                color: #7b8380;
+                font-size: 12px;
+            }
+            .steps-section {
+                background: #173f35;
+                color: white;
+            }
+            .steps-section .section-label {
+                color: #9ac9af;
+            }
+            .steps-section .section-heading h2 {
+                color: white;
+            }
+            .steps-section .section-heading p {
+                color: #bfd0c6;
+            }
+            .steps {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+            .step {
+                padding-right: 25px;
+                border-right: 1px solid rgba(255,255,255,0.16);
+            }
+            .step:last-child {
+                border-right: none;
+            }
+            .step-number {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 42px;
+                color: #9ac9af;
+                margin-bottom: 20px;
+            }
+            .step h3 {
+                font-size: 16px;
+                margin-bottom: 9px;
+            }
+            .step p {
+                color: #bfd0c6;
+                font-size: 12px;
+                line-height: 1.7;
+            }
+            .ai-section {
+                background: #ffffff;
+            }
+            .ai-banner {
+                background: #ece9df;
+                padding: 55px;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                align-items: center;
+                gap: 40px;
+            }
+            .ai-banner h2 {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 35px;
+                line-height: 1.15;
+                margin-bottom: 12px;
+            }
+            .ai-banner p {
+                color: #6e7672;
+                font-size: 13px;
+                max-width: 650px;
+            }
+            .ai-button {
+                background: #173f35;
+                color: white;
+                padding: 13px 19px;
+                font-size: 12px;
+                font-weight: 700;
+                white-space: nowrap;
+            }
+            .faq-section {
+                background: #f5f4ef;
+            }
+            .faq-list {
+                max-width: 850px;
+            }
+            .faq-item {
+                border-top: 1px solid #d8d7d0;
+            }
+            .faq-item:last-child {
+                border-bottom: 1px solid #d8d7d0;
+            }
+            .faq-question {
+                width: 100%;
+                padding: 21px 0;
+                background: none;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                text-align: left;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 700;
+                color: #27322e;
+            }
+            .faq-icon {
+                font-size: 18px;
+                color: #28654f;
+                transition: 0.2s;
+            }
+            .faq-answer {
+                display: none;
+                padding: 0 35px 21px 0;
+                color: #727a76;
+                font-size: 13px;
+                line-height: 1.7;
+            }
+            .faq-item.active .faq-answer {
+                display: block;
+            }
+            .faq-item.active .faq-icon {
+                transform: rotate(45deg);
+            }
+            .cta-section {
+                padding: 90px 25px;
+                background: #ffffff;
+                text-align: center;
+            }
+            .cta-section h2 {
+                max-width: 700px;
+                margin: auto;
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 48px;
+                line-height: 1.1;
+                letter-spacing: -2px;
+            }
+            .cta-section p {
+                max-width: 560px;
+                margin: 17px auto 27px;
+                color: #737b77;
+                font-size: 14px;
+            }
+            footer {
+                background: #17202a;
+                color: white;
+                padding: 60px 25px 22px;
+            }
+            .footer-inner {
+                max-width: 1240px;
+                margin: auto;
+            }
+            .footer-top {
+                display: grid;
+                grid-template-columns: 1.7fr 1fr 1fr 1fr;
+                gap: 50px;
+
+                padding-bottom: 45px;
+            }
+            .footer-brand {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                font-size: 20px;
+                font-weight: 800;
+                margin-bottom: 15px;
+            }
+            .footer-brand-mark {
+                width: 33px;
+                height: 33px;
+                background: #9ac9af;
+                color: #173f35;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+            }
+            .footer-about {
+                max-width: 300px;
+                color: #aeb7b3;
+                font-size: 12px;
+                line-height: 1.8;
+            }
+            .footer-column h4 {
+                font-size: 12px;
+                margin-bottom: 17px;
+                color: white;
+            }
+            .footer-column a {
+                display: block;
+                color: #9da7a3;
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+            .footer-column a:hover {
+                color: white;
+            }
+            .footer-bottom {
+                border-top: 1px solid #303a42;
+                padding-top: 20px;
+                display: flex;
+                justify-content: space-between;
+                color: #89938f;
+                font-size: 10px;
+            }
+            .mobile-menu {
+                display: none;
+                background: #ffffff;
+                border-bottom: 1px solid #deddd5;
+                padding: 18px 25px;
+            }
+            .mobile-menu a {
+                display: block;
+                padding: 10px 0;
+                color: #505b57;
+                font-size: 13px;
+                font-weight: 600;
+            }
+            @media (max-width: 950px) {
+                .nav-links, .nav-actions {
+                    display: none;
+                }
+                .menu-button {
+                    display: block;
+                }
+                .hero-inner {
+                    grid-template-columns: 1fr;
+                    gap: 50px;
+                }
+                .hero-content {
+                    text-align: center;
+                }
+                .hero h1, .hero-description {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .hero-actions {
+                    justify-content: center;
+                }
+                .hero-preview {
+                    min-height: 520px;
+                }
+                .feature-grid, .template-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .steps {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 35px;
+                }
+                .step:nth-child(2) {
+                    border-right: none;
+                }
+                .footer-top {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            @media (max-width: 650px) {
+                .navbar {
+                    height: 64px;
+                }
+                .hero {
+                    padding: 65px 18px;
+                }
+                .hero h1 {
+                    font-size: 47px;
+                    letter-spacing: -2px;
+                }
+                .hero-description {
+                    font-size: 14px;
+                }
+                .hero-actions {
+                    flex-direction: column;
+                }
+                .primary-button, .outline-button {
+                    width: 100%;
+                    justify-content: center;
+                }
+                .hero-preview {
+                    min-height: 450px;
+                }
+                .preview-background {
+                    width: 300px;
+                    height: 390px;
+                }
+                .resume-sheet {
+                    width: 285px;
+                    min-height: 385px;
+                    padding: 25px;
+                }
+                .resume-photo {
+                    width: 50px;
+                    height: 50px;
+                }
+                .resume-name {
+                    width: 130px;
+                }
+                .floating-label {
+                    right: 0;
+                    bottom: 25px;
+                }
+                .trust-inner {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                .trust-items {
+                    flex-wrap: wrap;
+                    gap: 15px;
+                }
+                .section {
+                    padding: 70px 18px;
+                }
+                .section-heading h2 {
+                    font-size: 34px;
+                }
+                .feature-grid, .template-grid, .steps {
+                    grid-template-columns: 1fr;
+                }
+                .step {
+                    border-right: none;
+                    border-bottom: 1px solid rgba(255,255,255,0.16);
+                    padding-bottom: 25px;
+                }
+                .step:last-child {
+                    border-bottom: none;
+                }
+                .ai-banner {
+                    grid-template-columns: 1fr;
+                    padding: 35px 25px;
+                }
+                .cta-section {
+                    padding: 70px 18px;
+                }
+                .cta-section h2 {
+                    font-size: 38px;
+                }
+                .footer-top {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 30px;
+                }
+                .footer-bottom {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="nav-inner">
+                <a href="index.html" class="brand">
+                    <span class="brand-mark">R</span>
+                    <span class="brand-name">ResumeCraft</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#templates">Templates</a>
+                    <a href="#how-it-works">How it works</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="login.html" class="login-link">Sign in</a>
+                    <a href="signup.html" class="nav-cta">Create my resume</a>
+                </div>
+                <button class="menu-button" onclick="toggleMobileMenu()">☰</button>
+            </div>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#features">Features</a>
+            <a href="#templates">Templates</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#faq">FAQ</a>
+            <a href="login.html">Sign in</a>
+            <a href="signup.html">Create my resume</a>
+        </div>
+        <section class="hero">
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <div class="hero-tag">
+                        <span class="tag-dot"></span>
+                        Professional Resume Builder
+                    </div>
+                    <h1>Your experience deserves a <em>better story.</em></h1>
+                    <p class="hero-description">Build a polished, professional resume without fighting with formatting. Choose a proven layout, add your experience and let ResumeCraft handle the presentation.</p>
+                    <div class="hero-actions">
+                        <a href="signup.html" class="primary-button">Start building<span>→</span></a>
+                        <a href="#templates" class="outline-button">Explore templates</a>
+                    </div>
+                    <p class="hero-note">No design skills required · Edit anytime · PDF ready</p>
+                </div>
+                <div class="hero-preview">
+                    <div class="preview-background"></div>
+                    <div class="resume-sheet">
+                        <div class="resume-top">
+                            <div>
+                                <div class="resume-name"></div>
+                                <div class="resume-role"></div>
+                            </div>
+                            <div class="resume-photo"></div>
+                        </div>
+                        <div class="resume-section">
+                            <div class="resume-section-title"></div>
+                            <div class="resume-line large"></div>
+                            <div class="resume-line large"></div>
+                            <div class="resume-line medium"></div>
+                        </div>
+                        <div class="resume-section">
+                            <div class="resume-section-title"></div>
+                            <div class="resume-line large"></div>
+                            <div class="resume-line medium"></div>
+                            <div class="resume-line short"></div><br>
+                            <div class="resume-line large"></div>
+                            <div class="resume-line medium"></div>
+                        </div>
+                        <div class="resume-section">
+                            <div class="resume-section-title"></div>
+                            <div class="resume-skills">
+                                <span class="skill"></span>
+                                <span class="skill"></span>
+                                <span class="skill"></span>
+                                <span class="skill"></span>
+                                <span class="skill"></span>
+                            </div>
+                        </div>
+                        <div class="resume-section">
+                            <div class="resume-section-title"></div>
+                            <div class="resume-line large"></div>
+                            <div class="resume-line large"></div>
+                            <div class="resume-line short"></div>
+                        </div>
+                    </div>
+                    <div class="floating-label">
+                        ✓ Ready to apply
+                        <span>Professional formatting applied</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="trust-bar">
+            <div class="trust-inner">
+                <span class="trust-text">Built for modern job seekers</span>
+                <div class="trust-items">
+                    <span>ATS Friendly</span>
+                    <span>PDF Ready</span>
+                    <span>Live Preview</span>
+                    <span>Multiple Templates</span>
+                </div>
+            </div>
+        </div>
+        <section class="section features-section" id="features">
+            <div class="section-inner">
+                <div class="section-heading">
+                    <div class="section-label">Why ResumeCraft</div>
+                    <h2>
+                        Everything you need.
+                        Nothing you don't.
+                    </h2>
+                    <p>Focus on your career story while ResumeCraft takes care of structure, consistency and professional presentation.</p>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature">01 — BUILDER</div>
+                        <h3>Simple editing</h3>
+                        <p>Enter your education, experience, projects, skills and achievements through an organized step-by-step builder.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-number">02 — PREVIEW</div>
+                        <h3>See it as you build it</h3>
+                        <p>Your resume preview updates while you work, so you always know exactly how the finished document will look.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-number">03 — AI ASSIST</div>
+                        <h3>Write with confidence</h3>
+                        <p>Get optional AI-assisted suggestions for summaries, project descriptions and other sections of your resume.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-number">04 — TEMPLATES</div>
+                        <h3>Designed to impress</h3>
+                        <p>Choose from clean, modern layouts created to keep important information easy to scan.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-number">05 — CUSTOMIZE</div>
+                        <h3>Make it yours</h3>
+                        <p>Switch templates, change colors and adjust the visual style whenever you want.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-number">06 — EXPORT</div>
+                        <h3>Ready when you are</h3>
+                        <p>Print your resume or export a polished version that is ready to send with your next application.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section templates-section" id="templates">
+            <div class="section-inner">
+                <div class="section-heading">
+                    <div class="section-label">Resume templates</div>
+                    <h2>Start with a design that fits your career.</h2>
+                    <p>You can change your template at any point. Your information stays intact.</p>
+                </div>
+                <div class="template-grid">
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <div class="template-paper modern">
+                                <div class="template-header-line"></div>
+                                <div class="template-subtitle"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line short"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line short"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Modern</h3>
+                            <p>Balanced and contemporary.</p>
+                        </div>
+                    </div>
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <div class="template-paper clean">
+                                <div class="template-header-line"></div>
+                                <div class="template-subtitle"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line short"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line short"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Clean</h3>
+                            <p>Minimal and easy to scan.</p>
+                        </div>
+                    </div>
+                    <div class="template-card">
+                        <div class="template-preview">
+                            <div class="template-paper executive">
+                                <div class="template-header-line"></div>
+                                <div class="template-subtitle"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line short"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line"></div>
+                                <div class="template-line"></div>
+                                <div class="template-heading"></div>
+                                <div class="template-line short"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Executive</h3>
+                            <p>Structured and traditional.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section steps-section" id="how-it-works">
+            <div class="section-inner">
+                <div class="section-heading">
+                    <div class="section-label">The process</div>
+                    <h2>From blank page to application-ready.</h2>
+                    <p>Four simple steps are all it takes to create your next professional resume.</p>
+                </div>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">01</div>
+                        <h3>Create your account</h3>
+                        <p>Sign up and access your personal resume workspace.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">02</div>
+                        <h3>Add your story</h3>
+                        <p>Enter your education, skills, work, projects and achievements.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">03</div>
+                        <h3>Choose your style</h3>
+                        <p>Select a template and personalize its colors and appearance.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">04</div>
+                        <h3>Download & apply</h3>
+                        <p>Review the finished resume and download or print it.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section ai-section">
+            <div class="section-inner">
+                <div class="ai-banner">
+                    <div>
+                        <div class="section-label">Optional AI assistance</div>
+                        <h2>Stuck on what to write?</h2>
+                        <p>ResumeCraft can help you turn rough ideas into clear, professional resume content. Generate suggestions for summaries, projects and skills, then edit them to make them your own.</p>
+                    </div>
+                    <a href="signup.html" class="ai-button">Try ResumeCraft →</a>
+                </div>
+            </div>
+        </section>
+        <section class="section faq-section" id="faq">
+            <div class="section-inner">
+                <div class="section-heading">
+                    <div class="section-label">FAQ</div>
+                    <h2>Questions, answered.</h2>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Can I create multiple resumes?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">Yes. Your dashboard can contain multiple resumes, making it easier to create different versions for different roles.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Can I change the template later?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            Yes. You can switch templates while editing your resume without having to enter your information again.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Does the resume preview update instantly?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            Yes. The resume builder is designed around a live preview so you can see changes as you make them.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Can I download my finished resume?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            Yes. The completed resume can be prepared for printing and PDF export.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Do I need design skills?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            No. Templates handle the layout and formatting while you focus on your information and career story.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="cta-section">
+            <h2>Your next opportunity starts with your resume.</h2>
+            <p>Build a professional resume, present your experience clearly and be ready for your next application.</p>
+            <a href="signup.html" class="primary-button">Create my resume →</a>
+        </section>
+        <footer>
+            <div class="footer-inner">
+                <div class="footer-top">
+                    <div>
+                        <div class="footer-brand">
+                            <span class="footer-brand-mark">R</span>
+                            ResumeCraft
+                        </div>
+                        <p class="footer-about">A modern resume builder designed to help students and professionals present their experience with confidence.</p>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#templates">Templates</a>
+                        <a href="dashboard.html">Dashboard</a>
+                        <a href="resume-builder.html">Resume Builder</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="#how-it-works">How it works</a>
+                        <a href="#faq">FAQ</a>
+                        <a href="#templates">Templates</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Account</h4>
+                        <a href="login.html">Sign in</a>
+                        <a href="signup.html">Create account</a>
+                        <a href="forgot-password.html">Forgot password</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>Build. Refine. Apply.</span>
+                </div>
+            </div>
+        </footer>
+        <script>
+            function toggleMobileMenu() {
+                const menu = document.getElementById("mobileMenu");
+                if (menu.style.display === "block") {
+                    menu.style.display = "none";
+                } else {
+                    menu.style.display = "block";
+                }
+            }
+            function toggleFAQ(button) {
+                const item = button.parentElement;
+                const allItems = document.querySelectorAll(".faq-item");
+                allItems.forEach(function(otherItem) {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove("active");
+                    }
+                });
+                item.classList.toggle("active");
+            }
+            document.querySelectorAll(".mobile-menu a")
+                .forEach(function(link) {
+                    link.addEventListener("click", function() {
+                        document.getElementById("mobileMenu")
+                            .style.display = "none";
+                    });
+                });
+        </script>
+    </body>
+</html>

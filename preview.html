@@ -1,0 +1,1184 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Resume Preview | ResumeCraft</title>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --green: #173f35;
+                --green-light: #28654f;
+                --cream: #f5f4ef;
+                --soft-green: #e8efe9;
+                --white: #ffffff;
+                --text: #17202a;
+                --muted: #707975;
+                --border: #d9dcd7;
+            }
+
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background: #e9eae5;
+                color: var(--text);
+            }
+
+
+            header {
+                height: 70px;
+                background: white;
+                border-bottom: 1px solid var(--border);
+                padding: 0 5%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+
+            .logo {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 25px;
+                font-weight: bold;
+                color: var(--green);
+                text-decoration: none;
+            }
+
+            .page-title {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                color: var(--muted);
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+            }
+
+            .header-actions {
+                display: flex;
+                gap: 8px;
+            }
+
+            .header-btn {
+                height: 38px;
+                padding: 0 15px;
+                border: 1px solid var(--border);
+                background: white;
+                color: var(--green);
+                font-size: 12px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            .header-btn:hover {
+                background: var(--soft-green);
+            }
+
+            .primary-btn {
+                background: var(--green);
+                color: white;
+                border-color: var(--green);
+            }
+
+            .primary-btn:hover {
+                background: var(--green-light);
+            }
+
+
+
+            main {
+                max-width: 1200px;
+                margin: auto;
+                padding: 35px 25px 60px;
+            }
+
+            .toolbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .toolbar-left {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .toolbar-left span:first-child {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 24px;
+                color: var(--green);
+            }
+
+            .toolbar-left span:last-child {
+                font-size: 11px;
+                color: var(--muted);
+            }
+
+            .template-controls {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .template-controls label {
+                font-size: 11px;
+                color: var(--muted);
+            }
+
+            select {
+                height: 35px;
+                border: 1px solid var(--border);
+                background: white;
+                padding: 0 10px;
+                font-size: 11px;
+                color: var(--green);
+                outline: none;
+            }
+
+
+            .resume-wrapper {
+                display: flex;
+                justify-content: center;
+            }
+
+            .resume {
+                width: 794px;
+                min-height: 1123px;
+                background: white;
+                padding: 58px;
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.13);
+                position: relative;
+            }
+
+
+            .resume.modern .resume-header {
+                border-bottom: 2px solid var(--accent);
+            }
+
+            .resume.modern .section-title {
+                color: var(--accent);
+            }
+
+
+            .resume.clean {
+                padding: 65px;
+            }
+
+            .resume.clean .resume-header {
+                text-align: center;
+                border-bottom: 1px solid #cfd3ce;
+                padding-bottom: 25px;
+            }
+
+            .resume.clean .contact {
+                justify-content: center;
+            }
+
+            .resume.clean .section-title {
+                border-bottom: none;
+                letter-spacing: 1.5px;
+                text-align: center;
+            }
+
+            .resume.clean .resume-entry {
+                padding-left: 0;
+                border-left: none;
+            }
+
+
+            .resume.executive {
+                border-top: 8px solid var(--accent);
+            }
+
+            .resume.executive .resume-header {
+                border-bottom: none;
+            }
+
+            .resume.executive .resume-name {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 39px;
+            }
+
+            .resume.executive .section-title {
+                background: var(--soft-accent);
+                padding: 7px 10px;
+                border-bottom: none;
+            }
+
+
+
+            .resume-header {
+                padding-bottom: 20px;
+                margin-bottom: 25px;
+            }
+
+            .header-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .resume-name {
+                font-family: Georgia, "Times New Roman", serif;
+                font-size: 36px;
+                font-weight: normal;
+                color: var(--accent);
+                line-height: 1.1;
+                margin-bottom: 8px;
+            }
+
+            .resume-job-title {
+                font-size: 11px;
+                color: var(--muted);
+                margin-bottom: 10px;
+            }
+
+            .contact {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px 13px;
+                font-size: 9px;
+                color: #626b66;
+            }
+
+            .contact span {
+                white-space: nowrap;
+            }
+
+            .profile-photo {
+                width: 85px;
+                height: 85px;
+                object-fit: cover;
+                display: none;
+            }
+
+
+            .summary {
+                font-size: 10px;
+                line-height: 1.75;
+                color: #4e5753;
+                margin-bottom: 24px;
+            }
+
+
+
+            .resume-section {
+                margin-bottom: 21px;
+            }
+
+            .section-title {
+                color: var(--accent);
+                font-size: 11px;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1.1px;
+                border-bottom: 1px solid #d6dad5;
+                padding-bottom: 6px;
+                margin-bottom: 13px;
+            }
+
+            .resume-entry {
+                margin-bottom: 13px;
+            }
+
+            .resume-entry:last-child {
+                margin-bottom: 0;
+            }
+
+            .entry-top {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+            }
+
+            .entry-title {
+                font-size: 10.5px;
+                font-weight: bold;
+                color: #222a26;
+            }
+
+            .entry-date {
+                font-size: 8.5px;
+                color: #7a827e;
+                white-space: nowrap;
+            }
+
+            .entry-subtitle {
+                font-size: 9.5px;
+                color: var(--accent);
+                margin-top: 3px;
+            }
+
+            .entry-description {
+                font-size: 9px;
+                color: #59615d;
+                line-height: 1.55;
+                margin-top: 5px;
+            }
+
+
+            .skills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .skill {
+                border: 1px solid #cfd5d0;
+                padding: 5px 8px;
+                font-size: 8.5px;
+                color: #3e4843;
+            }
+
+
+            .project-links {
+                font-size: 8.5px;
+                color: var(--accent);
+                margin-top: 4px;
+            }
+
+
+            .resume-list {
+                padding-left: 16px;
+            }
+
+            .resume-list li {
+                font-size: 9px;
+                line-height: 1.55;
+                color: #59615d;
+                margin-bottom: 4px;
+            }
+
+
+            .bottom-columns {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+
+
+            .resume-footer {
+                position: absolute;
+                bottom: 30px;
+                left: 58px;
+                right: 58px;
+                border-top: 1px solid #e0e2de;
+                padding-top: 8px;
+                display: flex;
+                justify-content: space-between;
+                color: #9aa19d;
+                font-size: 7px;
+            }
+
+
+            .toast {
+                position: fixed;
+                right: 25px;
+                bottom: 25px;
+                background: var(--green);
+                color: white;
+                padding: 13px 18px;
+                font-size: 12px;
+                transform: translateY(80px);
+                opacity: 0;
+                transition: 0.3s;
+                z-index: 200;
+            }
+
+            .toast.show {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+
+            @media (max-width: 850px) {
+
+                .page-title {
+                    display: none;
+                }
+
+                .toolbar {
+                    align-items: flex-start;
+                    flex-direction: column;
+                    gap: 15px;
+                }
+
+                .resume {
+                    width: 100%;
+                    min-height: auto;
+                    padding: 40px;
+                }
+
+                .resume-footer {
+                    position: static;
+                    margin-top: 30px;
+                }
+
+            }
+
+            @media (max-width: 600px) {
+
+                header {
+                    padding: 0 18px;
+                }
+
+                .logo {
+                    font-size: 21px;
+                }
+
+                .header-actions .secondary {
+                    display: none;
+                }
+
+                main {
+                    padding: 22px 12px 40px;
+                }
+
+                .resume {
+                    padding: 28px;
+                }
+
+                .resume-name {
+                    font-size: 29px;
+                }
+
+                .profile-photo {
+                    width: 65px;
+                    height: 65px;
+                }
+
+                .bottom-columns {
+                    grid-template-columns: 1fr;
+                    gap: 0;
+                }
+
+                .contact {
+                    display: block;
+                }
+
+                .contact span {
+                    display: block;
+                    margin-bottom: 3px;
+                }
+            }
+
+
+            @media print {
+
+                @page {
+                    size: A4;
+                    margin: 0;
+                }
+
+                body {
+                    background: white;
+                }
+
+                header,
+                .toolbar,
+                .toast {
+                    display: none !important;
+                }
+
+                main {
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .resume-wrapper {
+                    display: block;
+                }
+
+                .resume {
+                    width: 210mm;
+                    min-height: 297mm;
+                    margin: 0;
+                    padding: 18mm;
+                    box-shadow: none;
+                }
+
+                .resume-footer {
+                    left: 18mm;
+                    right: 18mm;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+    <header>
+
+        <a href="dashboard.html" class="logo">
+            ResumeCraft
+        </a>
+
+        <div class="page-title">
+            Resume Preview
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                class="header-btn secondary"
+                onclick="editResume()"
+            >
+                ← Edit Resume
+            </button>
+
+            <button
+                class="header-btn secondary"
+                onclick="window.location.href='dashboard.html'"
+            >
+                Dashboard
+            </button>
+
+            <button
+                class="header-btn primary-btn"
+                onclick="printResume()"
+            >
+                Download PDF
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <div class="toolbar">
+
+            <div class="toolbar-left">
+
+                <span>Final Preview</span>
+
+                <span>
+                    Check your resume before printing or downloading.
+                </span>
+
+            </div>
+
+            <div class="template-controls">
+
+                <label for="templateSelect">
+                    Template
+                </label>
+
+                <select
+                    id="templateSelect"
+                    onchange="changeTemplate()"
+                >
+                    <option value="modern">Modern</option>
+                    <option value="clean">Clean</option>
+                    <option value="executive">Executive</option>
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- RESUME -->
+
+        <div class="resume-wrapper">
+
+            <article
+                class="resume modern"
+                id="resume"
+            >
+
+                <!-- HEADER -->
+
+                <div class="resume-header">
+
+                    <div class="header-content">
+
+                        <div>
+
+                            <div
+                                class="resume-name"
+                                id="previewName"
+                            >
+                                Your Name
+                            </div>
+
+                            <div
+                                class="resume-job-title"
+                                id="previewJobTitle"
+                            >
+                                BCA Student · Web Developer
+                            </div>
+
+                            <div class="contact">
+
+                                <span id="previewEmail">
+                                    email@example.com
+                                </span>
+
+                                <span id="previewPhone">
+                                    +91 XXXXX XXXXX
+                                </span>
+
+                                <span id="previewAddress">
+                                    City, State
+                                </span>
+
+                                <span id="previewLinkedin">
+                                    LinkedIn
+                                </span>
+
+                                <span id="previewGithub">
+                                    GitHub
+                                </span>
+
+                                <span id="previewWebsite">
+                                    Website
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <img
+                            src=""
+                            alt="Profile"
+                            class="profile-photo"
+                            id="profilePhoto"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <section
+                    class="resume-section"
+                    id="summarySection"
+                >
+
+                    <div class="section-title">
+                        Professional Summary
+                    </div>
+
+                    <div
+                        class="summary"
+                        id="previewSummary"
+                    >
+                        Motivated and detail-oriented professional with a strong
+                        interest in software and web development. Passionate about
+                        building practical digital solutions and continuously
+                        improving technical skills.
+                    </div>
+
+                </section>
+
+
+
+                <section class="resume-section">
+
+                    <div class="section-title">
+                        Education
+                    </div>
+
+                    <div id="previewEducation">
+
+                        <div class="resume-entry">
+
+                            <div class="entry-top">
+
+                                <div class="entry-title">
+                                    Bachelor of Computer Applications
+                                </div>
+
+                                <div class="entry-date">
+                                    2023 – 2026
+                                </div>
+
+                            </div>
+
+                            <div class="entry-subtitle">
+                                University / College · 8.5 CGPA
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <section class="resume-section">
+
+                    <div class="section-title">
+                        Skills
+                    </div>
+
+                    <div
+                        class="skills"
+                        id="previewSkills"
+                    >
+
+                        <span class="skill">HTML</span>
+                        <span class="skill">CSS</span>
+                        <span class="skill">Python</span>
+
+                    </div>
+
+                </section>
+
+
+
+                <section class="resume-section">
+
+                    <div class="section-title">
+                        Experience
+                    </div>
+
+                    <div id="previewExperience">
+
+                        <div class="resume-entry">
+
+                            <div class="entry-top">
+
+                                <div class="entry-title">
+                                    Frontend Developer Intern
+                                </div>
+
+                                <div class="entry-date">
+                                    2026 – Present
+                                </div>
+
+                            </div>
+
+                            <div class="entry-subtitle">
+                                Company Name
+                            </div>
+
+                            <div class="entry-description">
+                                Developed responsive web interfaces and worked
+                                on practical frontend projects using modern
+                                development tools.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <section class="resume-section">
+
+                    <div class="section-title">
+                        Projects
+                    </div>
+
+                    <div id="previewProjects">
+
+                        <div class="resume-entry">
+
+                            <div class="entry-title">
+                                Expense Tracker
+                            </div>
+
+                            <div class="entry-subtitle">
+                                Python · JSON · SQLite
+                            </div>
+
+                            <div class="entry-description">
+                                Developed a CLI-based expense management
+                                application with CRUD operations, validation
+                                and persistent data storage.
+                            </div>
+
+                            <div class="project-links">
+                                GitHub · Live Demo
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <section
+                    class="resume-section"
+                    id="certificationSection"
+                >
+
+                    <div class="section-title">
+                        Certifications
+                    </div>
+
+                    <div id="previewCertifications">
+
+                        <div class="resume-entry">
+
+                            <div class="entry-top">
+
+                                <div class="entry-title">
+                                    Certification Name
+                                </div>
+
+                                <div class="entry-date">
+                                    2026
+                                </div>
+
+                            </div>
+
+                            <div class="entry-subtitle">
+                                Organization
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <div class="bottom-columns">
+
+
+                    <section
+                        class="resume-section"
+                        id="languageSection"
+                    >
+
+                        <div class="section-title">
+                            Languages
+                        </div>
+
+                        <div id="previewLanguages">
+
+                            <div class="resume-entry">
+
+                                <div class="entry-title">
+                                    English
+                                </div>
+
+                                <div class="entry-subtitle">
+                                    Advanced
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <section
+                        class="resume-section"
+                        id="achievementSection"
+                    >
+
+                        <div class="section-title">
+                            Achievements
+                        </div>
+
+                        <ul
+                            class="resume-list"
+                            id="previewAchievements"
+                        >
+
+                            <li>
+                                Add your achievements and accomplishments.
+                            </li>
+
+                        </ul>
+
+                    </section>
+
+                </div>
+
+
+                <div class="resume-footer">
+
+                    <span>
+                        ResumeCraft
+                    </span>
+
+                    <span>
+                        Professional Resume
+                    </span>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </main>
+
+
+    <div
+        class="toast"
+        id="toast"
+    >
+        Resume ready
+    </div>
+
+
+    <script>
+
+
+        const savedColor =
+            localStorage.getItem("resumeCraftColor");
+
+        const accent =
+            savedColor || "#173f35";
+
+        document.documentElement.style
+            .setProperty("--accent", accent);
+
+
+        document.documentElement.style
+            .setProperty("--soft-accent", "#e8efe9");
+
+
+
+        function loadResume() {
+
+            const saved =
+                localStorage.getItem("resumeCraftCurrentResume");
+
+            if (!saved) {
+                return;
+            }
+
+            try {
+
+                const data =
+                    JSON.parse(saved);
+
+                if (data.name) {
+                    document.getElementById("previewName").textContent =
+                        data.name;
+                }
+
+                if (data.email) {
+                    document.getElementById("previewEmail").textContent =
+                        data.email;
+                }
+
+                if (data.phone) {
+                    document.getElementById("previewPhone").textContent =
+                        data.phone;
+                }
+
+                if (data.address) {
+                    document.getElementById("previewAddress").textContent =
+                        data.address;
+                }
+
+                if (data.linkedin) {
+                    document.getElementById("previewLinkedin").textContent =
+                        data.linkedin;
+                } else {
+                    document.getElementById("previewLinkedin").style.display =
+                        "none";
+                }
+
+                if (data.github) {
+                    document.getElementById("previewGithub").textContent =
+                        data.github;
+                } else {
+                    document.getElementById("previewGithub").style.display =
+                        "none";
+                }
+
+                if (data.website) {
+                    document.getElementById("previewWebsite").textContent =
+                        data.website;
+                } else {
+                    document.getElementById("previewWebsite").style.display =
+                        "none";
+                }
+
+                if (data.summary) {
+                    document.getElementById("previewSummary").textContent =
+                        data.summary;
+                }
+
+                if (data.achievements) {
+
+                    const achievements =
+                        data.achievements.split("\n");
+
+                    let html = "";
+
+                    achievements.forEach(function(item) {
+
+                        if (item.trim()) {
+
+                            html += `
+                                <li>${item.trim()}</li>
+                            `;
+
+                        }
+
+                    });
+
+                    if (html) {
+
+                        document.getElementById(
+                            "previewAchievements"
+                        ).innerHTML = html;
+
+                    }
+
+                }
+
+            } catch (error) {
+
+                console.log("Resume data could not be loaded.");
+
+            }
+
+        }
+
+
+
+        function changeTemplate() {
+
+            const template =
+                document.getElementById("templateSelect").value;
+
+            const resume =
+                document.getElementById("resume");
+
+            resume.classList.remove(
+                "modern",
+                "clean",
+                "executive"
+            );
+
+            resume.classList.add(template);
+
+            localStorage.setItem(
+                "resumeCraftTemplate",
+                template
+            );
+
+            showToast(
+                template.charAt(0).toUpperCase() +
+                template.slice(1) +
+                " template selected"
+            );
+
+        }
+
+
+        function loadTemplate() {
+
+            const savedTemplate =
+                localStorage.getItem("resumeCraftTemplate");
+
+            if (!savedTemplate) {
+                return;
+            }
+
+            document.getElementById("templateSelect").value =
+                savedTemplate;
+
+            const resume =
+                document.getElementById("resume");
+
+            resume.classList.remove(
+                "modern",
+                "clean",
+                "executive"
+            );
+
+            resume.classList.add(savedTemplate);
+
+        }
+
+
+        function editResume() {
+
+            window.location.href =
+                "resume-builder.html";
+
+        }
+
+
+
+        function printResume() {
+
+            showToast(
+                "Opening print dialog..."
+            );
+
+            setTimeout(function() {
+
+                window.print();
+
+            }, 500);
+
+        }
+
+
+        function showToast(text) {
+
+            const toast =
+                document.getElementById("toast");
+
+            toast.textContent =
+                text;
+
+            toast.classList.add("show");
+
+            setTimeout(function() {
+
+                toast.classList.remove("show");
+
+            }, 2200);
+
+        }
+
+
+
+        const savedPhoto =
+            localStorage.getItem("resumeCraftProfilePhoto");
+
+        if (savedPhoto) {
+
+            const photo =
+                document.getElementById("profilePhoto");
+
+            photo.src =
+                savedPhoto;
+
+            photo.style.display =
+                "block";
+
+        }
+
+
+        loadResume();
+        loadTemplate();
+
+    </script>
+
+    </body>
+</html>

@@ -1,0 +1,1214 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | ResumeCraft</title>
+
+    <style>
+      :root {
+        --bg: #f5f4ef;
+        --white: #ffffff;
+        --green: #173f35;
+        --green-2: #28654f;
+        --light-green: #e8efe9;
+        --cream: #ece9df;
+        --text: #17202a;
+        --muted: #68726e;
+        --border: #dfe2dc;
+        --danger: #a33a32;
+        --shadow: 0 12px 35px rgba(23, 63, 53, 0.08);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+
+      .navbar {
+        height: 72px;
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 6%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: var(--green);
+        letter-spacing: -0.5px;
+      }
+
+      .logo span {
+        color: var(--green-2);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+      }
+
+      .nav-link {
+        color: var(--muted);
+        font-size: 14px;
+        transition: 0.2s;
+      }
+
+      .nav-link:hover {
+        color: var(--green);
+      }
+
+      .dashboard-btn {
+        border: 1px solid var(--green);
+        padding: 10px 17px;
+        color: var(--green);
+        font-size: 14px;
+        transition: 0.2s;
+      }
+
+      .dashboard-btn:hover {
+        background: var(--green);
+        color: white;
+      }
+
+      /* PAGE */
+      .page {
+        width: min(1180px, 90%);
+        margin: 55px auto 80px;
+      }
+
+      .page-header {
+        margin-bottom: 32px;
+      }
+
+      .eyebrow {
+        color: var(--green-2);
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      .page-header h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(34px, 5vw, 52px);
+        color: var(--green);
+        line-height: 1.05;
+        margin-bottom: 10px;
+      }
+
+      .page-header p {
+        color: var(--muted);
+        font-size: 15px;
+        max-width: 620px;
+        line-height: 1.7;
+      }
+
+      .profile-layout {
+        display: grid;
+        grid-template-columns: 310px 1fr;
+        gap: 25px;
+        align-items: start;
+      }
+
+      .profile-sidebar {
+        background: var(--green);
+        color: white;
+        padding: 32px 28px;
+        min-height: 430px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-sidebar::after {
+        content: "";
+        width: 180px;
+        height: 180px;
+        border: 1px solid rgba(255,255,255,0.12);
+        position: absolute;
+        right: -80px;
+        bottom: -80px;
+        transform: rotate(45deg);
+      }
+
+      .avatar-wrapper {
+        position: relative;
+        width: 115px;
+        height: 115px;
+        margin-bottom: 22px;
+      }
+
+      .avatar {
+        width: 115px;
+        height: 115px;
+        border-radius: 50%;
+        background: var(--cream);
+        color: var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Georgia, serif;
+        font-size: 42px;
+        font-weight: bold;
+        overflow: hidden;
+        border: 4px solid rgba(255,255,255,0.25);
+      }
+
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none;
+      }
+
+      .upload-photo {
+        position: absolute;
+        right: -4px;
+        bottom: 2px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 2px solid var(--green);
+        background: white;
+        color: var(--green);
+        cursor: pointer;
+        font-size: 15px;
+      }
+
+      .profile-sidebar h2 {
+        font-family: Georgia, serif;
+        font-size: 25px;
+        margin-bottom: 6px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .profile-role {
+        color: #c8d9d1;
+        font-size: 14px;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .profile-status {
+        border-top: 1px solid rgba(255,255,255,0.18);
+        padding-top: 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .profile-status span {
+        display: block;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #a9c0b6;
+        margin-bottom: 6px;
+      }
+
+      .profile-status strong {
+        font-size: 14px;
+        font-weight: normal;
+      }
+
+
+      .profile-content {
+        background: var(--white);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+
+      .section {
+        padding: 30px 34px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section:last-child {
+        border-bottom: none;
+      }
+
+      .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+
+      .section-title h2 {
+        font-family: Georgia, serif;
+        color: var(--green);
+        font-size: 23px;
+      }
+
+      .section-title p {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 5px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+        color: var(--text);
+        margin-bottom: 8px;
+        letter-spacing: 0.2px;
+      }
+
+      .field input {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid var(--border);
+        background: #fbfbf9;
+        color: var(--text);
+        outline: none;
+        transition: 0.2s;
+      }
+
+      .field input:focus {
+        border-color: var(--green-2);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(40,101,79,0.08);
+      }
+
+      .field input:disabled {
+        color: #858c88;
+        background: #f0f1ed;
+        cursor: not-allowed;
+      }
+
+      .field small {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 6px;
+      }
+
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 25px;
+      }
+
+      .btn {
+        border: none;
+        padding: 12px 20px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: 0.2s;
+      }
+
+      .btn-primary {
+        background: var(--green);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #0f3028;
+      }
+
+      .btn-secondary {
+        background: var(--cream);
+        color: var(--green);
+      }
+
+      .btn-secondary:hover {
+        background: #e1ded2;
+      }
+
+
+      .password-box {
+        max-width: 650px;
+      }
+
+      .password-note {
+        background: var(--light-green);
+        border-left: 3px solid var(--green-2);
+        padding: 13px 15px;
+        color: var(--green);
+        font-size: 12px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+
+      .account-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .account-row:last-child {
+        border-bottom: none;
+      }
+
+      .account-label {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .account-value {
+        color: var(--text);
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .danger-btn {
+        border: 1px solid #d8aaa5;
+        color: var(--danger);
+        background: transparent;
+        padding: 10px 16px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .danger-btn:hover {
+        background: #fff3f1;
+      }
+
+
+      .toast {
+        position: fixed;
+        right: 25px;
+        bottom: 25px;
+        background: var(--green);
+        color: white;
+        padding: 13px 18px;
+        font-size: 13px;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: 0.3s;
+        z-index: 999;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 850px) {
+        .navbar {
+          padding: 0 5%;
+        }
+
+        .nav-right .nav-link {
+          display: none;
+        }
+
+        .page {
+          width: 92%;
+          margin-top: 35px;
+        }
+
+        .profile-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .profile-sidebar {
+          min-height: auto;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .navbar {
+          height: 65px;
+        }
+
+        .logo {
+          font-size: 22px;
+        }
+
+        .dashboard-btn {
+          padding: 8px 12px;
+          font-size: 12px;
+        }
+
+        .page-header h1 {
+          font-size: 38px;
+        }
+
+        .section {
+          padding: 24px 20px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .field.full {
+          grid-column: auto;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        .actions .btn {
+          width: 100%;
+        }
+
+        .account-row {
+          align-items: flex-start;
+          gap: 10px;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+
+    <nav class="navbar">
+      <a href="dashboard.html" class="logo">
+        Resume<span>Craft</span>
+      </a>
+
+      <div class="nav-right">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+        <a href="dashboard.html" class="dashboard-btn">Back to Dashboard</a>
+      </div>
+    </nav>
+
+
+    <main class="page">
+
+
+      <div class="page-header">
+        <div class="eyebrow">Account</div>
+        <h1>Your profile.</h1>
+        <p>
+          Keep your personal information up to date. This information can
+          also be used while creating your resumes.
+        </p>
+      </div>
+
+
+      <div class="profile-layout">
+
+
+        <aside class="profile-sidebar">
+
+          <div class="avatar-wrapper">
+
+            <div class="avatar" id="avatar">
+              <span id="avatarInitial">R</span>
+              <img id="profileImage" alt="Profile photo">
+            </div>
+
+            <button
+              type="button"
+              class="upload-photo"
+              onclick="document.getElementById('photoInput').click()"
+              title="Change photo"
+            >
+              +
+            </button>
+
+            <input
+              type="file"
+              id="photoInput"
+              accept="image/*"
+              hidden
+            >
+
+          </div>
+
+          <h2 id="sidebarName">Resume User</h2>
+
+          <p class="profile-role">
+            ResumeCraft Member
+          </p>
+
+          <div class="profile-status">
+            <span>Account status</span>
+            <strong>Active</strong>
+          </div>
+
+        </aside>
+
+
+
+        <section class="profile-content">
+
+          <div class="section">
+
+            <div class="section-title">
+              <div>
+                <h2>Personal information</h2>
+                <p>Update the details associated with your account.</p>
+              </div>
+            </div>
+
+            <form id="profileForm">
+
+              <div class="form-grid">
+
+                <div class="field">
+                  <label for="fullName">Full name</label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Enter your full name"
+                    required
+                  >
+                </div>
+
+                <div class="field">
+                  <label for="email">Email address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="you@example.com"
+                    disabled
+                  >
+                  <small>Your email cannot be changed here.</small>
+                </div>
+
+                <div class="field">
+                  <label for="phone">Phone number</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    placeholder="+91 98765 43210"
+                  >
+                </div>
+
+                <div class="field">
+                  <label for="location">Location</label>
+                  <input
+                    type="text"
+                    id="location"
+                    placeholder="City, Country"
+                  >
+                </div>
+
+                <div class="field full">
+                  <label for="headline">Professional headline</label>
+                  <input
+                    type="text"
+                    id="headline"
+                    placeholder="e.g. BCA Student | Web Developer"
+                  >
+                </div>
+
+                <div class="field">
+                  <label for="linkedin">LinkedIn profile</label>
+                  <input
+                    type="url"
+                    id="linkedin"
+                    placeholder="https://linkedin.com/in/yourname"
+                  >
+                </div>
+
+                <div class="field">
+                  <label for="github">GitHub profile</label>
+                  <input
+                    type="url"
+                    id="github"
+                    placeholder="https://github.com/yourname"
+                  >
+                </div>
+
+                <div class="field full">
+                  <label for="website">Personal website</label>
+                  <input
+                    type="url"
+                    id="website"
+                    placeholder="https://yourwebsite.com"
+                  >
+                </div>
+
+              </div>
+
+              <div class="actions">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="resetProfile()"
+                >
+                  Reset
+                </button>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Save changes
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+
+
+          <div class="section">
+
+            <div class="section-title">
+              <div>
+                <h2>Change password</h2>
+                <p>Choose a strong password to keep your account secure.</p>
+              </div>
+            </div>
+
+            <div class="password-box">
+
+              <div class="password-note">
+                Use at least 8 characters with a combination of letters,
+                numbers and special characters.
+              </div>
+
+              <div class="form-grid">
+
+                <div class="field full">
+                  <label for="currentPassword">Current password</label>
+                  <input
+                    type="password"
+                    id="currentPassword"
+                    placeholder="Enter current password"
+                  >
+                </div>
+
+                <div class="field">
+                  <label for="newPassword">New password</label>
+                  <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Enter new password"
+                  >
+                </div>
+
+                <div class="field">
+                  <label for="confirmPassword">Confirm new password</label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm new password"
+                  >
+                </div>
+
+              </div>
+
+              <div class="actions">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="changePassword()"
+                >
+                  Update password
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="section">
+
+            <div class="section-title">
+              <div>
+                <h2>Account details</h2>
+                <p>Basic information about your ResumeCraft account.</p>
+              </div>
+            </div>
+
+            <div class="account-row">
+              <span class="account-label">Account type</span>
+              <span class="account-value">Free Account</span>
+            </div>
+
+            <div class="account-row">
+              <span class="account-label">Member since</span>
+              <span class="account-value" id="memberSince">
+                September 2026
+              </span>
+            </div>
+
+            <div class="account-row">
+              <span class="account-label">Saved resumes</span>
+              <span class="account-value" id="resumeCount">
+                0 resumes
+              </span>
+            </div>
+
+            <div class="account-row">
+              <span class="account-label">Session</span>
+              <button
+                type="button"
+                class="danger-btn"
+                onclick="logout()"
+              >
+                Log out
+              </button>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+
+    <div class="toast" id="toast"></div>
+
+
+    <script>
+
+
+      let savedProfile = {};
+
+      function getUser() {
+
+        const storedUser =
+          localStorage.getItem("resumeCraftUser");
+
+        if (!storedUser) {
+          return {
+            name: localStorage.getItem("resumeCraftName") || "Resume User",
+            email: ""
+          };
+        }
+
+        try {
+
+          const parsed =
+            JSON.parse(storedUser);
+
+          if (typeof parsed === "object") {
+            return parsed;
+          }
+
+          return {
+            name: localStorage.getItem("resumeCraftName") || "Resume User",
+            email: parsed
+          };
+
+        } catch (error) {
+
+          return {
+            name: localStorage.getItem("resumeCraftName") || "Resume User",
+            email: storedUser
+          };
+
+        }
+      }
+
+
+      function loadProfile() {
+
+        const user = getUser();
+
+        const storedProfile =
+          localStorage.getItem("resumeCraftProfile");
+
+        if (storedProfile) {
+
+          try {
+            savedProfile = JSON.parse(storedProfile);
+          } catch (error) {
+            savedProfile = {};
+          }
+
+        }
+
+        document.getElementById("fullName").value =
+          savedProfile.fullName ||
+          user.name ||
+          "";
+
+        document.getElementById("email").value =
+          user.email ||
+          savedProfile.email ||
+          "";
+
+        document.getElementById("phone").value =
+          savedProfile.phone ||
+          "";
+
+        document.getElementById("location").value =
+          savedProfile.location ||
+          "";
+
+        document.getElementById("headline").value =
+          savedProfile.headline ||
+          "";
+
+        document.getElementById("linkedin").value =
+          savedProfile.linkedin ||
+          "";
+
+        document.getElementById("github").value =
+          savedProfile.github ||
+          "";
+
+        document.getElementById("website").value =
+          savedProfile.website ||
+          "";
+
+        updateSidebar();
+
+        loadPhoto();
+
+        updateResumeCount();
+      }
+
+
+
+      function updateSidebar() {
+
+        const name =
+          document.getElementById("fullName").value.trim()
+          || "Resume User";
+
+        document.getElementById("sidebarName").textContent =
+          name;
+
+        const initial =
+          name.charAt(0).toUpperCase();
+
+        document.getElementById("avatarInitial").textContent =
+          initial;
+      }
+
+
+
+      document
+        .getElementById("profileForm")
+        .addEventListener("submit", function(event) {
+
+          event.preventDefault();
+
+          const profile = {
+
+            fullName:
+              document.getElementById("fullName").value.trim(),
+
+            email:
+              document.getElementById("email").value.trim(),
+
+            phone:
+              document.getElementById("phone").value.trim(),
+
+            location:
+              document.getElementById("location").value.trim(),
+
+            headline:
+              document.getElementById("headline").value.trim(),
+
+            linkedin:
+              document.getElementById("linkedin").value.trim(),
+
+            github:
+              document.getElementById("github").value.trim(),
+
+            website:
+              document.getElementById("website").value.trim()
+
+          };
+
+          localStorage.setItem(
+            "resumeCraftProfile",
+            JSON.stringify(profile)
+          );
+
+          localStorage.setItem(
+            "resumeCraftName",
+            profile.fullName
+          );
+
+
+          /* Keep user object consistent */
+
+          const existingUser = getUser();
+
+          const updatedUser = {
+
+            name: profile.fullName,
+
+            email:
+              existingUser.email ||
+              profile.email,
+
+            loggedIn: true
+
+          };
+
+          localStorage.setItem(
+            "resumeCraftUser",
+            JSON.stringify(updatedUser)
+          );
+
+
+          savedProfile = profile;
+
+          updateSidebar();
+
+          showToast("Profile updated successfully.");
+        });
+
+
+
+      function resetProfile() {
+
+        const user = getUser();
+
+        document.getElementById("fullName").value =
+          user.name || "";
+
+        document.getElementById("phone").value = "";
+        document.getElementById("location").value = "";
+        document.getElementById("headline").value = "";
+        document.getElementById("linkedin").value = "";
+        document.getElementById("github").value = "";
+        document.getElementById("website").value = "";
+
+        updateSidebar();
+
+        showToast("Changes reset.");
+      }
+
+
+      function changePassword() {
+
+        const current =
+          document.getElementById("currentPassword").value;
+
+        const newPassword =
+          document.getElementById("newPassword").value;
+
+        const confirm =
+          document.getElementById("confirmPassword").value;
+
+
+        if (!current || !newPassword || !confirm) {
+
+          showToast("Please fill in all password fields.");
+
+          return;
+        }
+
+
+        if (newPassword.length < 8) {
+
+          showToast(
+            "New password must contain at least 8 characters."
+          );
+
+          return;
+        }
+
+
+        if (newPassword !== confirm) {
+
+          showToast("New passwords do not match.");
+
+          return;
+        }
+
+
+
+        localStorage.setItem(
+          "resumeCraftPassword",
+          newPassword
+        );
+
+
+        document.getElementById("currentPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+
+        showToast("Password updated successfully.");
+      }
+
+
+
+      document
+        .getElementById("photoInput")
+        .addEventListener("change", function(event) {
+
+          const file = event.target.files[0];
+
+          if (!file) {
+            return;
+          }
+
+          if (!file.type.startsWith("image/")) {
+
+            showToast("Please select an image file.");
+
+            return;
+          }
+
+
+          const reader = new FileReader();
+
+          reader.onload = function(e) {
+
+            const image =
+              document.getElementById("profileImage");
+
+            image.src = e.target.result;
+            image.style.display = "block";
+
+            document.getElementById(
+              "avatarInitial"
+            ).style.display = "none";
+
+
+            localStorage.setItem(
+              "resumeCraftProfilePhoto",
+              e.target.result
+            );
+
+            showToast("Profile photo updated.");
+          };
+
+          reader.readAsDataURL(file);
+
+        });
+
+
+      function loadPhoto() {
+
+        const photo =
+          localStorage.getItem(
+            "resumeCraftProfilePhoto"
+          );
+
+        if (!photo) {
+          return;
+        }
+
+        const image =
+          document.getElementById("profileImage");
+
+        image.src = photo;
+        image.style.display = "block";
+
+        document.getElementById(
+          "avatarInitial"
+        ).style.display = "none";
+      }
+
+
+      function updateResumeCount() {
+
+        let count = 0;
+
+        const possibleKeys = [
+          "resumeCraftResumes",
+          "resumeCraftSavedResumes"
+        ];
+
+        for (const key of possibleKeys) {
+
+          const data =
+            localStorage.getItem(key);
+
+          if (!data) {
+            continue;
+          }
+
+          try {
+
+            const parsed = JSON.parse(data);
+
+            if (Array.isArray(parsed)) {
+              count = parsed.length;
+              break;
+            }
+
+            if (typeof parsed === "object") {
+              count = Object.keys(parsed).length;
+              break;
+            }
+
+          } catch (error) {
+            continue;
+          }
+        }
+
+        document.getElementById("resumeCount").textContent =
+          count + (count === 1 ? " resume" : " resumes");
+      }
+
+
+      function logout() {
+
+        localStorage.removeItem("resumeCraftUser");
+        localStorage.removeItem("resumeCraftRemember");
+
+        window.location.href = "login.html";
+      }
+
+      function showToast(message) {
+
+        const toast =
+          document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(function() {
+
+          toast.classList.remove("show");
+
+        }, 2500);
+      }
+
+
+      loadProfile();
+
+    </script>
+
+  </body>
+</html>

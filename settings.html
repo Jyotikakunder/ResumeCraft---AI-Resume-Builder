@@ -1,0 +1,1463 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | ResumeCraft</title>
+
+  <style>
+    :root {
+      --bg: #f5f4ef;
+      --white: #ffffff;
+      --green: #173f35;
+      --green-2: #28654f;
+      --light-green: #e8efe9;
+      --cream: #ece9df;
+      --text: #17202a;
+      --muted: #68726e;
+      --border: #dfe2dc;
+      --danger: #a33a32;
+      --shadow: 0 12px 35px rgba(23, 63, 53, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+
+    .navbar {
+      height: 72px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      font-weight: bold;
+      color: var(--green);
+    }
+
+    .logo span {
+      color: var(--green-2);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--green);
+    }
+
+    .dashboard-btn {
+      border: 1px solid var(--green);
+      padding: 10px 17px;
+      color: var(--green);
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .dashboard-btn:hover {
+      background: var(--green);
+      color: white;
+    }
+
+    .page {
+      width: min(1150px, 90%);
+      margin: 55px auto 80px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .eyebrow {
+      color: var(--green-2);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .page-header h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--green);
+      font-size: clamp(36px, 5vw, 52px);
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      max-width: 650px;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+
+    .settings-layout {
+      display: grid;
+      grid-template-columns: 225px 1fr;
+      gap: 25px;
+      align-items: start;
+    }
+
+
+    .settings-nav {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 10px;
+      position: sticky;
+      top: 95px;
+    }
+
+    .settings-nav button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: left;
+      padding: 13px 14px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.2s;
+      margin-bottom: 2px;
+    }
+
+    .settings-nav button:hover {
+      background: var(--cream);
+      color: var(--green);
+    }
+
+    .settings-nav button.active {
+      background: var(--light-green);
+      color: var(--green);
+      font-weight: bold;
+      border-left: 3px solid var(--green-2);
+    }
+
+
+    .settings-content {
+      background: var(--white);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .settings-section {
+      padding: 32px 35px;
+      border-bottom: 1px solid var(--border);
+      display: none;
+    }
+
+    .settings-section.active {
+      display: block;
+    }
+
+    .section-heading {
+      margin-bottom: 28px;
+    }
+
+    .section-heading h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      color: var(--green);
+      margin-bottom: 7px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .option-row:first-of-type {
+      padding-top: 0;
+    }
+
+    .option-row:last-child {
+      border-bottom: none;
+    }
+
+    .option-info {
+      max-width: 620px;
+    }
+
+    .option-info h3 {
+      color: var(--text);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .option-info p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+
+    .switch {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #c9cfcb;
+      transition: 0.25s;
+    }
+
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      transition: 0.25s;
+    }
+
+    .switch input:checked + .slider {
+      background: var(--green-2);
+    }
+
+    .switch input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+
+
+    .select-box {
+      min-width: 170px;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      background: #fbfbf9;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .select-box:focus {
+      border-color: var(--green-2);
+    }
+
+    .theme-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .theme-card {
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      padding: 8px;
+      transition: 0.2s;
+    }
+
+    .theme-card:hover {
+      border-color: var(--green-2);
+      transform: translateY(-2px);
+    }
+
+    .theme-card.active {
+      border: 2px solid var(--green-2);
+    }
+
+    .theme-preview {
+      height: 105px;
+      padding: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-preview span {
+      display: block;
+      height: 7px;
+      margin-bottom: 7px;
+      width: 55%;
+    }
+
+    .theme-preview i {
+      display: block;
+      height: 5px;
+      margin-bottom: 5px;
+      width: 80%;
+      opacity: 0.6;
+    }
+
+    .theme-green {
+      background: #edf4ef;
+    }
+
+    .theme-green span {
+      background: #173f35;
+    }
+
+    .theme-green i {
+      background: #28654f;
+    }
+
+    .theme-cream {
+      background: #f3eee3;
+    }
+
+    .theme-cream span {
+      background: #4e4536;
+    }
+
+    .theme-cream i {
+      background: #82745f;
+    }
+
+    .theme-dark {
+      background: #1c2522;
+    }
+
+    .theme-dark span {
+      background: #d9e7df;
+    }
+
+    .theme-dark i {
+      background: #8fb29f;
+    }
+
+    .theme-name {
+      display: block;
+      padding: 10px 3px 3px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 25px;
+    }
+
+    .btn {
+      border: none;
+      padding: 12px 21px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0f3028;
+    }
+
+    .btn-secondary {
+      background: var(--cream);
+      color: var(--green);
+      margin-right: 10px;
+    }
+
+
+    .account-box {
+      background: var(--light-green);
+      border-left: 3px solid var(--green-2);
+      padding: 17px;
+      margin-bottom: 25px;
+    }
+
+    .account-box strong {
+      display: block;
+      color: var(--green);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .account-box span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .danger-zone {
+      border: 1px solid #e4c5c1;
+      padding: 22px;
+      margin-top: 30px;
+      background: #fffafa;
+    }
+
+    .danger-zone h3 {
+      color: var(--danger);
+      font-size: 15px;
+      margin-bottom: 7px;
+    }
+
+    .danger-zone p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .delete-btn {
+      border: 1px solid #c98c85;
+      background: transparent;
+      color: var(--danger);
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .delete-btn:hover {
+      background: #fff0ee;
+    }
+
+
+    .toast {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: var(--green);
+      color: white;
+      padding: 13px 18px;
+      font-size: 13px;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: 0.3s;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    body.dark {
+      --bg: #111916;
+      --white: #1b2521;
+      --green: #dcebe4;
+      --green-2: #8db8a5;
+      --light-green: #25372f;
+      --cream: #2a302d;
+      --text: #e8eeeb;
+      --muted: #aab7b1;
+      --border: #35413c;
+      --shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    body.dark .field input,
+    body.dark .select-box {
+      background: #151d1a;
+      color: var(--text);
+    }
+
+    body.dark .theme-card {
+      background: #1b2521;
+    }
+
+    body.dark .danger-zone {
+      background: #251b1a;
+      border-color: #593b37;
+    }
+
+    @media (max-width: 800px) {
+
+      .navbar {
+        padding: 0 5%;
+      }
+
+      .nav-right .nav-link {
+        display: none;
+      }
+
+      .page {
+        width: 92%;
+        margin-top: 35px;
+      }
+
+      .settings-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .settings-nav {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+      }
+
+      .settings-nav button {
+        text-align: center;
+        padding: 11px 5px;
+        font-size: 11px;
+      }
+
+      .settings-nav button.active {
+        border-left: none;
+        border-bottom: 3px solid var(--green-2);
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      .navbar {
+        height: 65px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .dashboard-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+
+      .page-header h1 {
+        font-size: 38px;
+      }
+
+      .settings-section {
+        padding: 25px 20px;
+      }
+
+      .option-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .select-box {
+        width: 100%;
+      }
+
+      .theme-options {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions button {
+        width: 100%;
+        margin: 0 0 10px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+
+    <a href="dashboard.html" class="logo">
+      Resume<span>Craft</span>
+    </a>
+
+    <div class="nav-right">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="profile.html" class="nav-link">Profile</a>
+
+      <a href="dashboard.html" class="dashboard-btn">
+        Back to Dashboard
+      </a>
+    </div>
+
+  </nav>
+
+
+  <main class="page">
+
+
+    <div class="page-header">
+
+      <div class="eyebrow">
+        Preferences
+      </div>
+
+      <h1>Settings.</h1>
+
+      <p>
+        Customize ResumeCraft to match the way you work,
+        build resumes and manage your account.
+      </p>
+
+    </div>
+
+
+    <div class="settings-layout">
+
+
+      <aside class="settings-nav">
+
+        <button
+          class="setting-tab active"
+          data-target="appearance"
+          onclick="openSetting('appearance', this)"
+        >
+          Appearance
+        </button>
+
+        <button
+          class="setting-tab"
+          data-target="resume"
+          onclick="openSetting('resume', this)"
+        >
+          Resume
+        </button>
+
+        <button
+          class="setting-tab"
+          data-target="notifications"
+          onclick="openSetting('notifications', this)"
+        >
+          Notifications
+        </button>
+
+        <button
+          class="setting-tab"
+          data-target="account"
+          onclick="openSetting('account', this)"
+        >
+          Account
+        </button>
+
+      </aside>
+
+
+      <section class="settings-content">
+
+
+        <div
+          class="settings-section active"
+          id="appearance"
+        >
+
+          <div class="section-heading">
+
+            <h2>Appearance</h2>
+
+            <p>
+              Choose how ResumeCraft looks across your workspace.
+            </p>
+
+          </div>
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Dark mode</h3>
+
+              <p>
+                Use a darker interface for a more comfortable
+                experience in low-light environments.
+              </p>
+
+            </div>
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="darkMode"
+                onchange="toggleDarkMode()"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+
+          <!-- THEME -->
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Interface theme</h3>
+
+              <p>
+                Select an accent style for your ResumeCraft workspace.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="theme-options">
+
+            <div
+              class="theme-card active"
+              data-theme="green"
+              onclick="selectTheme('green', this)"
+            >
+
+              <div class="theme-preview theme-green">
+                <span></span>
+                <i></i>
+                <i></i>
+                <i></i>
+              </div>
+
+              <span class="theme-name">
+                Forest
+              </span>
+
+            </div>
+
+
+            <div
+              class="theme-card"
+              data-theme="cream"
+              onclick="selectTheme('cream', this)"
+            >
+
+              <div class="theme-preview theme-cream">
+                <span></span>
+                <i></i>
+                <i></i>
+                <i></i>
+              </div>
+
+              <span class="theme-name">
+                Warm
+              </span>
+
+            </div>
+
+
+            <div
+              class="theme-card"
+              data-theme="dark"
+              onclick="selectTheme('dark', this)"
+            >
+
+              <div class="theme-preview theme-dark">
+                <span></span>
+                <i></i>
+                <i></i>
+                <i></i>
+              </div>
+
+              <span class="theme-name">
+                Night
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="option-row" style="margin-top: 20px;">
+
+            <div class="option-info">
+
+              <h3>Font style</h3>
+
+              <p>
+                Choose the default font style used in your resume preview.
+              </p>
+
+            </div>
+
+            <select
+              class="select-box"
+              id="fontStyle"
+              onchange="saveFontStyle()"
+            >
+
+              <option value="serif">
+                Editorial Serif
+              </option>
+
+              <option value="modern">
+                Modern Sans
+              </option>
+
+              <option value="classic">
+                Classic
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- RESUME SETTINGS -->
+
+        <div
+          class="settings-section"
+          id="resume"
+        >
+
+          <div class="section-heading">
+
+            <h2>Resume preferences</h2>
+
+            <p>
+              Control how your resumes are saved and displayed.
+            </p>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Auto-save</h3>
+
+              <p>
+                Automatically save changes while editing a resume.
+              </p>
+
+            </div>
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="autoSave"
+                checked
+                onchange="saveResumeSetting()"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Show profile photo</h3>
+
+              <p>
+                Allow your profile photo to appear in resume templates
+                that support it.
+              </p>
+
+            </div>
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="showPhoto"
+                checked
+                onchange="saveResumeSetting()"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Default resume template</h3>
+
+              <p>
+                Choose the template that opens when creating a new resume.
+              </p>
+
+            </div>
+
+            <select
+              class="select-box"
+              id="defaultTemplate"
+              onchange="saveResumeSetting()"
+            >
+
+              <option value="modern">
+                Modern
+              </option>
+
+              <option value="clean">
+                Clean
+              </option>
+
+              <option value="executive">
+                Executive
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Default resume format</h3>
+
+              <p>
+                Select the preferred page size for your exported resume.
+              </p>
+
+            </div>
+
+            <select
+              class="select-box"
+              id="pageSize"
+              onchange="saveResumeSetting()"
+            >
+
+              <option value="a4">
+                A4
+              </option>
+
+              <option value="letter">
+                Letter
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+        <div
+          class="settings-section"
+          id="notifications"
+        >
+
+          <div class="section-heading">
+
+            <h2>Notifications</h2>
+
+            <p>
+              Decide which updates you want to receive from ResumeCraft.
+            </p>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Resume reminders</h3>
+
+              <p>
+                Get reminders to review and update your resumes.
+              </p>
+
+            </div>
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="resumeReminder"
+                checked
+                onchange="saveNotificationSettings()"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Product updates</h3>
+
+              <p>
+                Receive information about new ResumeCraft features
+                and improvements.
+              </p>
+
+            </div>
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="productUpdates"
+                checked
+                onchange="saveNotificationSettings()"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Tips and suggestions</h3>
+
+              <p>
+                Receive useful resume-building and career suggestions.
+              </p>
+
+            </div>
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="tips"
+                checked
+                onchange="saveNotificationSettings()"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Email notifications</h3>
+
+              <p>
+                Enable or disable non-essential emails from ResumeCraft.
+              </p>
+
+            </div>
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="emailNotifications"
+                checked
+                onchange="saveNotificationSettings()"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+        </div>
+        <div
+          class="settings-section"
+          id="account"
+        >
+
+          <div class="section-heading">
+
+            <h2>Account</h2>
+
+            <p>
+              Manage your ResumeCraft account and stored information.
+            </p>
+
+          </div>
+
+
+          <div class="account-box">
+
+            <strong id="accountName">
+              Resume User
+            </strong>
+
+            <span id="accountEmail">
+              No email available
+            </span>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Profile</h3>
+
+              <p>
+                Update your name, contact information and professional links.
+              </p>
+
+            </div>
+
+            <button
+              class="btn btn-secondary"
+              onclick="window.location.href='profile.html'"
+            >
+              Edit profile
+            </button>
+
+          </div>
+
+
+          <div class="option-row">
+
+            <div class="option-info">
+
+              <h3>Password</h3>
+
+              <p>
+                Change your account password from your profile page.
+              </p>
+
+            </div>
+
+            <button class="btn btn-secondary" onclick="window.location.href='profile.html'">
+              Change password
+            </button>
+
+          </div>
+
+
+          <div class="option-row">
+            <div class="option-info">
+              <h3>Log out</h3>
+              <p>
+                Sign out from this ResumeCraft session.
+              </p>
+            </div>
+            <button class="btn btn-secondary" onclick="logout()">
+              Log out
+            </button>
+
+          </div>
+          <div class="danger-zone">
+            <h3>Delete account</h3>
+            <p>
+              This demo option clears your ResumeCraft data from this
+              browser. In a real application, account deletion would
+              be handled securely through the backend.
+            </p>
+            <buttonclass="delete-btn" onclick="deleteAccount()">
+              Delete account data
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script>
+    function openSetting(sectionId, button) {
+      document
+        .querySelectorAll(".settings-section")
+        .forEach(function(section) {
+          section.classList.remove("active");
+        });
+      document
+        .querySelectorAll(".setting-tab")
+        .forEach(function(tab) {
+          tab.classList.remove("active");
+        });
+      document
+        .getElementById(sectionId)
+        .classList.add("active");
+      button.classList.add("active");
+    }
+    function toggleDarkMode() {
+      const checkbox = document.getElementById("darkMode");
+      if (checkbox.checked) {
+        document.body.classList.add("dark");
+        localStorage.setItem(
+          "resumeCraftDarkMode",
+          "true"
+        );
+      } else {
+        document.body.classList.remove("dark");
+        localStorage.setItem("resumeCraftDarkMode","false");
+      }
+      showToast(checkbox.checked ? "Dark mode enabled." : "Dark mode disabled.");
+    }
+    function loadDarkMode() {
+      const enabled = localStorage.getItem("resumeCraftDarkMode") === "true";
+      document
+        .getElementById("darkMode")
+        .checked = enabled;
+      if (enabled) {
+        document.body.classList.add("dark");
+      }
+    }
+    function selectTheme(theme, element) {
+      document
+        .querySelectorAll(".theme-card")
+        .forEach(function(card) {
+          card.classList.remove("active");
+        });
+      element.classList.add("active");
+      localStorage.setItem("resumeCraftTheme", theme);
+      if (theme === "green") {
+        document.documentElement.style.setProperty("--green", "#173f35");
+        document.documentElement.style.setProperty("--green-2", "#28654f");
+      }
+      if (theme === "cream") {
+        document.documentElement.style.setProperty("--green", "#4e4536");
+        document.documentElement.style.setProperty("--green-2","#82745f");
+      }
+      if (theme === "dark") {
+        document.documentElement.style.setProperty("--green", "#dcebe4");
+        document.documentElement.style.setProperty("--green-2", "#8db8a5");
+      }
+      showToast("Theme updated.");
+    }
+    function loadTheme() {
+      const theme = localStorage.getItem("resumeCraftTheme") || "green";
+      const selected = document.querySelector(`[data-theme="${theme}"]`);
+      if (selected) {
+        selectTheme(theme, selected);
+      }
+    }
+    function saveFontStyle() {
+      const font = document.getElementById("fontStyle").value;
+      localStorage.setItem("resumeCraftFontStyle", font);
+      showToast("Font preference saved.");
+    }
+    function loadFontStyle() {
+      const font = localStorage.getItem("resumeCraftFontStyle");
+      if (font) {
+        document.getElementById("fontStyle").value = font;
+      }
+    }
+    function saveResumeSetting() {
+      const settings = {
+        autoSave:
+          document.getElementById("autoSave").checked,
+        showPhoto:
+          document.getElementById("showPhoto").checked,
+        defaultTemplate:
+          ("defaultTemplate").value,
+        pageSize:
+          document.getElementById("pageSize").value
+      };
+      localStorage.setItem("resumeCraftResumeSettings", JSON.stringify(settings));
+      showToast("Resume settings saved.");
+    }
+    function loadResumeSettings() {
+      const stored = localStorage.getItem("resumeCraftResumeSettings");
+      if (!stored) {
+        return;
+      }
+      try {
+        const settings = JSON.parse(stored);
+        if (typeof settings.autoSave !== "undefined") {
+          document.getElementById("autoSave").checked = settings.autoSave;
+        }
+        if (typeof settings.showPhoto !== "undefined") {
+          document.getElementById("showPhoto").checked = settings.showPhoto;
+        }
+        if (settings.defaultTemplate) {
+          document.getElementById("defaultTemplate").value = settings.defaultTemplate;
+        }
+        if (settings.pageSize) {
+          document.getElementById("pageSize").value = settings.pageSize;
+        }
+      } catch (error) {
+        console.log("Could not load resume settings.");
+      }
+    }
+    function saveNotificationSettings() {
+      const notifications = {
+        resumeReminder:
+          document.getElementById("resumeReminder").checked,
+        productUpdates:
+          document.getElementById("productUpdates").checked,
+        tips:
+          document.getElementById("tips").checked,
+        emailNotifications: 
+          document.getElementById("emailNotifications").checked
+      };
+      localStorage.setItem(
+        "resumeCraftNotifications",
+        JSON.stringify(notifications)
+      );
+      showToast("Notification preferences saved.");
+    }
+    function loadNotificationSettings() {
+      const stored = localStorage.getItem("resumeCraftNotifications");
+      if (!stored) {
+        return;
+      }
+      try {
+        const notifications = JSON.parse(stored);
+        if (typeof notifications.resumeReminder !== "undefined") {
+          document.getElementById(
+            "resumeReminder"
+          ).checked =
+            notifications.resumeReminder;
+        }
+        if (typeof notifications.productUpdates !== "undefined") {
+          document.getElementById("productUpdates").checked = notifications.productUpdates;
+        }
+        if (typeof notifications.tips !== "undefined") {
+          document.getElementById("tips").checked = notifications.tips;
+        }
+        if (typeof notifications.emailNotifications !== "undefined") {
+          document.getElementById("emailNotifications").checked = notifications.emailNotifications;
+        }
+      } catch (error) {
+        console.log("Could not load notification settings.");
+      }
+    }
+    function loadAccountInfo() {
+      const storedUser = localStorage.getItem("resumeCraftUser");
+      let name = localStorage.getItem("resumeCraftName") || "Resume User";
+      let email = "";
+      if (storedUser) {
+        try {
+          const user = JSON.parse(storedUser);
+          if (typeof user === "object" && user !== null) {
+            name = user.name || name;
+            email = user.email || "";
+          } else {
+            email = user;
+          }
+        } catch (error) {
+          email = storedUser;
+        }
+      }
+      const profile = localStorage.getItem("resumeCraftProfile");
+      if (profile) {
+        try {
+          const profileData = JSON.parse(profile);
+          name = profileData.fullName || name;
+          email = profileData.email || email;
+        } catch (error) {
+          console.log("Could not load profile data.");
+        }
+
+      }
+      document.getElementById("accountName").textContent = name;
+      document.getElementById("accountEmail").textContent = email || "No email available";
+    }
+    function logout() {
+      localStorage.removeItem("resumeCraftUser");
+      localStorage.removeItem("resumeCraftRemember");
+      window.location.href = "login.html";
+    }
+    function deleteAccount() {
+      const confirmed = confirm("Are you sure you want to delete your ResumeCraft account data? This cannot be undone.");
+      if (!confirmed) {
+        return;
+      }
+      const keysToRemove = [
+        "resumeCraftUser",
+        "resumeCraftName",
+        "resumeCraftProfile",
+        "resumeCraftProfilePhoto",
+        "resumeCraftPassword",
+        "resumeCraftResumes",
+        "resumeCraftSavedResumes",
+        "resumeCraftCurrentResume",
+        "resumeCraftTemplate",
+        "resumeCraftColor",
+        "resumeCraftDarkMode",
+        "resumeCraftTheme",
+        "resumeCraftFontStyle",
+        "resumeCraftResumeSettings",
+        "resumeCraftNotifications"
+      ];
+      keysToRemove.forEach(function(key) {
+        localStorage.removeItem(key);
+      });
+      showToast("Account data deleted.");
+      setTimeout(function() {
+        window.location.href = "login.html";
+      }, 1200);
+    }
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(function() {
+        toast.classList.remove("show");
+      }, 2500);
+    }
+    loadDarkMode();
+    loadTheme();
+    loadFontStyle();
+    loadResumeSettings();
+    loadNotificationSettings();
+    loadAccountInfo();
+  </script>
+</body>
+</html>
